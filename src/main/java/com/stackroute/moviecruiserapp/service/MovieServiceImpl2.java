@@ -1,11 +1,13 @@
 package com.stackroute.moviecruiserapp.service;
 
+import com.fasterxml.jackson.annotation.OptBoolean;
 import com.stackroute.moviecruiserapp.domain.Movie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Qualifier("impl2")
@@ -17,7 +19,7 @@ public class MovieServiceImpl2 implements MovieService {
     }
 
     @Override
-    public Movie getMovieById(int id) {
+    public Optional<Movie> getMovieById(int id) {
         System.out.println(id);
         return null;
     }

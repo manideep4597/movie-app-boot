@@ -8,10 +8,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @EnableJpaRepositories
 @Repository
 public interface MovieRepository extends CrudRepository<Movie,Integer> {
-    @Query(value="select * from MOVIE o where o.TITLE=:title",nativeQuery = true)
-    public Movie getMovieByTitle(@Param("title") String title);
+   // @Query(value="select * from MOVIE o where o.TITLE=:title",nativeQuery = true)
+    public Movie getMovieByTitle(String title);
 }

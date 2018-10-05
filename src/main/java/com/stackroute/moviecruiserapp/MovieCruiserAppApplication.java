@@ -24,13 +24,13 @@ public class MovieCruiserAppApplication implements ApplicationListener<ContextRe
 
 	@Override
 	public void run(String... args) throws Exception {
-		movieRepository.save(new Movie(3,"command","english","save"));
-		movieRepository.save(new Movie(4,"title2","hindi","save"));
+		movieRepository.save(new Movie(3,"venom","english","save"));
+		movieRepository.save(new Movie(4,"stree","hindi","save"));
 	}
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-		movieRepository.save(new Movie(1,"title","english","save"));
-		movieRepository.save(new Movie(2,"title2","hindi","save"));
+		movieRepository.save(new Movie(1,"la la","english","save"));
+		movieRepository.save(new Movie(2,"devadas","telugu","save"));
 
 	}
 }

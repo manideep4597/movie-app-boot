@@ -7,8 +7,6 @@ import com.stackroute.moviecruiserapp.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,52 +24,48 @@ public class MovieServiceImpl implements MovieService{
     }
 
 
-    public Movie getMovieById(int id) {
+    public Optional<Movie> getMovieById(int id) throws MovieNotFoundException {
         Optional<Movie> movie;
         movie=movieRepository.findById(id);
         if(!movie.isPresent())
             throw new MovieNotFoundException(id);
-        return movie.get();
+        return movie;
     }
 
-    public Movie getMovieByTitle(String title) {
+    public Movie getMovieByTitle(String title) throws MovieNotFoundException {
 //        Optional<Movie> movie;
 //        List<Movie> movieList=getAllMovies();
 //        for(Movie movie2:movieList){
 //            if(movie2.getTitle().equals(title))
 //                return movie2;
 //        }
-        System.out.println(movieRepository.getMovieByTitle(title));
         return movieRepository.getMovieByTitle(title);
-        //throw new MovieNotFoundException(title);
+       // throw new MovieNotFoundException(title);
     }
 
 
 
-    public List<Movie> deleteMovie(int id) {
+    public List<Movie> deleteMovie(int id) throws MovieNotFoundException {
         if(!movieRepository.existsById(id))
             throw new MovieNotFoundException(id);
-        Movie movie1=getMovieById(id);
-        movieRepository.delete(movie1);
+        Optional<Movie> movie1=getMovieById(id);
+        movieRepository.delete(movie1.get());
         return getAllMovies();
     }
 
 
-    public Movie updateMovie(int id,String comments) {
+    public Movie updateMovie(int id,String comments) throws MovieNotFoundException {
 
         if(!movieRepository.existsById(id))
             throw new MovieNotFoundException(id);
-        Movie movie1=getMovieById(id);
-        if(movie1!=null){
-            movie1.setComments(comments);
-        }
-        Movie savedMovie=movieRepository.save(movie1);
+        Optional<Movie> movie1=getMovieById(id);
+        movie1.get().setComments(comments);
+        Movie savedMovie=movieRepository.save(movie1.get());
         return savedMovie;
     }
 
 
-    public Movie addMovie(Movie movie) {
-        List<Movie> movieList=getAllMovies();
+    public Movie addMovie(Movie movie) throws MovieAlreadyExistsException {
         if(movieRepository.existsById(movie.getId()))
             throw new MovieAlreadyExistsException(movie);
 //        for(Movie movie2:movieList){
