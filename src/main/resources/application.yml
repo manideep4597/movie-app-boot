@@ -1,0 +1,10 @@
+jdbc:
+    basic:
+        maxOpenPreparedStatements: -1
+spring:
+    h2:
+        console:
+            enabled: true
+    jackson:
+        serialization:
+            write_dates_as_timestamps: false
