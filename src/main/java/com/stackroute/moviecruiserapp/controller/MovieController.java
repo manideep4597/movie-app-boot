@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value="/movie-api/v1")
+@RequestMapping(value="/movie-api/v1/movie")
 public class MovieController {
     private MovieService movieService;
     @Autowired
@@ -25,19 +25,19 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping(value="/movie")
+    @PostMapping(value="")
     public ResponseEntity<?> saveMovie(@RequestBody Movie movie){
         ResponseEntity responseEntity;
         try {
-            Movie saveduser = movieService.addMovie(movie);
-            responseEntity = new ResponseEntity<Movie>(saveduser, HttpStatus.OK);
+            Movie savedMovie = movieService.addMovie(movie);
+            responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
         }
         catch (MovieAlreadyExistsException ex){
             responseEntity = new ResponseEntity<String>("Movie already exists",HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
-    @GetMapping(value="/movie")
+    @GetMapping(value="")
     public ResponseEntity<?> getAllMovies(){
         List<Movie> movieList= movieService.getAllMovies();
         ResponseEntity responseEntity=new ResponseEntity<List<Movie>>(movieList,HttpStatus.OK);
@@ -47,8 +47,8 @@ public class MovieController {
     public ResponseEntity<?> getMovieByTitle(@PathVariable(value="title") String title) {
         ResponseEntity responseEntity;
         try {
-            Movie saveduser = movieService.getMovieByTitle(title);
-            responseEntity = new ResponseEntity<Movie>(saveduser, HttpStatus.OK);
+            Movie savedMovie = movieService.getMovieByTitle(title);
+            responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
             responseEntity = new ResponseEntity<String>("No such title",HttpStatus.CONFLICT);
@@ -59,8 +59,8 @@ public class MovieController {
     public ResponseEntity<?> deleteMovie(@PathVariable(value="id") int movieId){
         ResponseEntity responseEntity;
         try {
-           List<Movie> saveduser = movieService.deleteMovie(movieId);
-            responseEntity = new ResponseEntity<List<Movie>>(saveduser, HttpStatus.OK);
+           List<Movie> savedList = movieService.deleteMovie(movieId);
+            responseEntity = new ResponseEntity<List<Movie>>(savedList, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
             responseEntity = new ResponseEntity<String>("No such id",HttpStatus.CONFLICT);
@@ -71,8 +71,8 @@ public class MovieController {
     public ResponseEntity<?> updateMovie(@PathVariable(value="id") int movieId,@RequestBody String comments){
         ResponseEntity responseEntity;
         try {
-            Movie saveduser = movieService.updateMovie(movieId,comments);
-            responseEntity = new ResponseEntity<Movie>(saveduser, HttpStatus.OK);
+            Movie savedMovie = movieService.updateMovie(movieId,comments);
+            responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
             responseEntity = new ResponseEntity<String>("No such id",HttpStatus.CONFLICT);

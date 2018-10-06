@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @EnableJpaRepositories
 @Repository
-public interface MovieRepository extends CrudRepository<Movie,Integer> {
-   // @Query(value="select * from MOVIE o where o.TITLE=:title",nativeQuery = true)
-    public Movie getMovieByTitle(String title);
+public interface MovieRepository extends JpaRepository<Movie,Integer> {
+    @Query(value="select * from MOVIE o where o.TITLE=:title",nativeQuery = true)
+    public Movie getMovieByTitle(@Param("title") String title);
 }

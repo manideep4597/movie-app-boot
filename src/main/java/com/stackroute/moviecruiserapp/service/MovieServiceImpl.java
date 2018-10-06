@@ -16,8 +16,12 @@ import java.util.Optional;
 @Qualifier("impl1")
 @Primary
 public class MovieServiceImpl implements MovieService{
-    @Autowired
+
     MovieRepository movieRepository;
+
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     public List<Movie> getAllMovies() {
         return (List<Movie>) movieRepository.findAll();

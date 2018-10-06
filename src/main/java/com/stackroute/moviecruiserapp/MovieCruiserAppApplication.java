@@ -18,9 +18,12 @@ public class MovieCruiserAppApplication implements ApplicationListener<ContextRe
 	public static void main(String[] args) {
 		SpringApplication.run(MovieCruiserAppApplication.class, args);
 	}
-	@Autowired
+
 	private MovieRepository movieRepository;
 
+	public MovieCruiserAppApplication(MovieRepository movieRepository) {
+		this.movieRepository = movieRepository;
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
