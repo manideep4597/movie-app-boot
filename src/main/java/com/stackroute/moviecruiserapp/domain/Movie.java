@@ -1,14 +1,20 @@
 package com.stackroute.moviecruiserapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Entity
+@Document
 public class Movie {
     @Id
     private int id;
-    private String title,language,comments;
+    @NotNull
+    private String title,language;
+    @Size(min=2, message="Comments should have atleast 2 characters")
+    private String comments;
     private LocalDateTime releaseDate;
 
     public Movie() {

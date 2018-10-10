@@ -3,7 +3,7 @@ package com.stackroute.moviecruiserapp.service;
 import com.stackroute.moviecruiserapp.domain.Movie;
 import com.stackroute.moviecruiserapp.exceptions.MovieAlreadyExistsException;
 import com.stackroute.moviecruiserapp.exceptions.MovieNotFoundException;
-import org.springframework.data.jpa.repository.Query;
+
 
 import java.util.List;
 import java.util.Optional;
