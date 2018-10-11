@@ -42,41 +42,68 @@ public class MovieRepositoryTest {
     }
     @Test
     public void testSaveMovie(){
-        movieRepository.save(movie);
+        movieRepository.insert(movie);
         Movie fetchMovie = movieRepository.findById(movie.getId()).get();
         Assert.assertEquals(10,fetchMovie.getId());
     }
     @Test
     public void testSaveMovieFailure(){
         Movie testMovie = new Movie(101,"spiderman","English","4 star");
-        movieRepository.save(testMovie);
-        movieRepository.save(movie);
+        movieRepository.insert(testMovie);
+        movieRepository.insert(movie);
         Movie fetchMovie=movieRepository.findById(movie.getId()).get();
         Assert.assertNotSame(fetchMovie,movie);
     }
     @Test
     public void testDeleteMovie(){
-        movieRepository.save(movie);
+        movieRepository.insert(movie);
         movieRepository.delete(movie);
         boolean fetchMovie = movieRepository.existsById(movie.getId());
         Assert.assertEquals(false,fetchMovie);
     }
     @Test
     public void testDeleteMovieFailure(){
-        Movie testMovie = new Movie(10,"spiderman","English","4 star");
-        movieRepository.save(movie);
-        movieRepository.save(testMovie);
-        movieRepository.delete(movie);
-        Optional<Movie> fetchMovie=movieRepository.findById(movie.getId());
-        Assert.assertEquals(Optional.empty(),fetchMovie);
+        Movie testMovie1 = new Movie(1,"dev1","telugu1","comment1");
+        movieRepository.insert(testMovie1);
+        Movie fetchMovie = movieRepository.findById(testMovie1.getId()).get();
+        Assert.assertNotSame(testMovie1,fetchMovie);
+    }
+    @Test
+    public void updateMovieTest() {
+        movieRepository.insert(movie);
+        Movie movie1 = movieRepository.findById(movie.getId()).get();
+        movie1.setComments("Sending");
+        movieRepository.save(movie1);
+        Assert.assertEquals("Sending", movie1.getComments());
+    }
+    @Test
+    public void updateMovieTestFailure() {
+        movieRepository.insert(movie);
+        Movie movie1 = movieRepository.findById(movie.getId()).get();
+        movie1.setComments("Sending");
+        movieRepository.save(movie1);
+        Assert.assertNotSame(movie, movie1);
+    }
+    @Test
+    public void testgetByMovieTitle(){
+        movieRepository.insert(movie);
+        Movie fetchMovie = movieRepository.getMovieByTitle(movie.getTitle());
+        Assert.assertEquals(10,fetchMovie.getId());
+    }
+    @Test
+    public void testgetByMovieTitleFailure(){
+        Movie testMovie1 = new Movie(1,"dev1","telugu1","comment1");
+        movieRepository.insert(testMovie1);
+        Movie fetchMovie = movieRepository.getMovieByTitle(testMovie1.getTitle());
+        Assert.assertNotSame(testMovie1,fetchMovie);
     }
     @Test
     public void testGetAllMovie(){
         List<Movie> listold = movieRepository.findAll();
         Movie movie1 = new Movie(10,"Gita Govindam","Telugu","3 star");
         Movie movie2 = new Movie(9,"Bommarillu","Telugu","4 star");
-        movieRepository.save(movie1);
-        movieRepository.save(movie2);
+        movieRepository.insert(movie1);
+        movieRepository.insert(movie2);
         List<Movie> listUpdated = movieRepository.findAll();
         Assert.assertEquals(listold.size()+2,listUpdated.size());
     }
