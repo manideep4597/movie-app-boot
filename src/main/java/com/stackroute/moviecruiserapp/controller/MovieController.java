@@ -27,11 +27,11 @@ public class MovieController {
     }
 
     @PostMapping(value="")
-    public ResponseEntity<?> saveMovie(@Valid @RequestBody Movie movie){
+    public ResponseEntity<?> saveMovie(@RequestBody Movie movie){
         ResponseEntity responseEntity;
         try {
             Movie savedMovie = movieService.addMovie(movie);
-            responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
+            responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.CREATED);
         }
         catch (MovieAlreadyExistsException ex){
             responseEntity = new ResponseEntity<String>("Movie already exists",HttpStatus.CONFLICT);

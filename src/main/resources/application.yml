@@ -1,7 +1,11 @@
+server:
+  port: 8090
 jdbc:
     basic:
         maxOpenPreparedStatements: -1
 spring:
+  application:
+    name: movie-service
     h2:
         console:
             enabled: true

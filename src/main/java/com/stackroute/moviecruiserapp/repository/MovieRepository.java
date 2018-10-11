@@ -11,8 +11,8 @@ import java.util.Optional;
 
 
 
-//@Repository
+@Repository
 public interface MovieRepository extends MongoRepository<Movie,Integer> {
-    //@Query(value="select * from MOVIE o where o.TITLE=:title",nativeQuery = true)
+    @Query("{ 'title' : ?0 }")
     public Movie getMovieByTitle(@Param("title") String title);
 }

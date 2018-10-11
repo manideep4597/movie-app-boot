@@ -28,11 +28,9 @@ public class MovieServiceImpl implements MovieService{
     }
 
 
-    public Optional<Movie> getMovieById(int id) throws MovieNotFoundException {
+    public Optional<Movie> getMovieById(int id)  {
         Optional<Movie> movie;
         movie=movieRepository.findById(id);
-        if(!movie.isPresent())
-            throw new MovieNotFoundException(id);
         return movie;
     }
 
@@ -43,7 +41,11 @@ public class MovieServiceImpl implements MovieService{
 //            if(movie2.getTitle().equals(title))
 //                return movie2;
 //        }
-        return movieRepository.getMovieByTitle(title);
+        Movie savedMovie= movieRepository.getMovieByTitle(title);
+        if(savedMovie == null){
+            throw new MovieNotFoundException(title);
+        }
+        return savedMovie;
        // throw new MovieNotFoundException(title);
     }
 
@@ -77,6 +79,9 @@ public class MovieServiceImpl implements MovieService{
 //                throw new MovieAlreadyExistsException(movie);
 //        }
         Movie savedMovie=movieRepository.save(movie);
+        if(savedMovie == null){
+            throw new MovieAlreadyExistsException(movie);
+        }
         return savedMovie;
     }
 }
