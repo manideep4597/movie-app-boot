@@ -8,6 +8,7 @@ import com.stackroute.moviecruiserapp.service.MovieServiceImpl;
 import com.stackroute.moviecruiserapp.service.MovieServiceImpl2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RefreshScope
 @RequestMapping(value="/movie-api/v1")
 public class MovieController {
     private MovieService movieService;
