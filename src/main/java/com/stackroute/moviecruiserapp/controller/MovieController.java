@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value="/movie-api/v1/movie")
+@RequestMapping(value="/movie-api/v1")
 public class MovieController {
     private MovieService movieService;
     @Autowired
@@ -26,8 +26,8 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @PostMapping(value="")
-    public ResponseEntity<?> saveMovie(@RequestBody Movie movie){
+    @PostMapping(value="/movie")
+    public ResponseEntity<?> saveMovie(@RequestBody @Valid Movie movie){
         ResponseEntity responseEntity;
         try {
             Movie savedMovie = movieService.addMovie(movie);
@@ -38,13 +38,13 @@ public class MovieController {
         }
         return responseEntity;
     }
-    @GetMapping(value="")
+    @GetMapping(value="/movie")
     public ResponseEntity<?> getAllMovies(){
         List<Movie> movieList= movieService.getAllMovies();
         ResponseEntity responseEntity=new ResponseEntity<List<Movie>>(movieList,HttpStatus.OK);
         return responseEntity;
     }
-    @PostMapping(value="/{title}")
+    @PostMapping(value="/movie/{title}")
     public ResponseEntity<?> getMovieByTitle(@Valid @PathVariable(value="title") String title) {
         ResponseEntity responseEntity;
         try {
@@ -56,7 +56,7 @@ public class MovieController {
         }
         return responseEntity;
     }
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value="/movie/{id}")
     public ResponseEntity<?> deleteMovie(@PathVariable(value="id") int movieId){
         ResponseEntity responseEntity;
         try {
@@ -68,7 +68,7 @@ public class MovieController {
         }
         return responseEntity;
     }
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/movie/{id}")
     public ResponseEntity<?> updateMovie(@PathVariable(value="id") int movieId,@Valid @RequestBody String comments){
         ResponseEntity responseEntity;
         try {
