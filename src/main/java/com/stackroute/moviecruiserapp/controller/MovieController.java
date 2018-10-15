@@ -8,6 +8,7 @@ import com.stackroute.moviecruiserapp.service.MovieServiceImpl;
 import com.stackroute.moviecruiserapp.service.MovieServiceImpl2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,8 @@ public class MovieController {
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
-
+    @Value("${movie-service.controller.exceptionmsg1}")
+    private String exceptionMessage;
     @PostMapping(value="/movie")
     public ResponseEntity<?> saveMovie(@RequestBody @Valid Movie movie){
         ResponseEntity responseEntity;
@@ -54,7 +56,7 @@ public class MovieController {
             responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
-            responseEntity = new ResponseEntity<String>("No such title",HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<String>(exceptionMessage,HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
@@ -66,7 +68,7 @@ public class MovieController {
             responseEntity = new ResponseEntity<List<Movie>>(savedList, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
-            responseEntity = new ResponseEntity<String>("No such id",HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<String>(exceptionMessage,HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
@@ -78,7 +80,7 @@ public class MovieController {
             responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.OK);
         }
         catch (MovieNotFoundException ex){
-            responseEntity = new ResponseEntity<String>("No such id",HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<String>(exceptionMessage,HttpStatus.CONFLICT);
         }
         return responseEntity;
     }

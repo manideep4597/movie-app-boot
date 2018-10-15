@@ -4,6 +4,8 @@ import com.stackroute.moviecruiserapp.domain.Movie;
 import com.stackroute.moviecruiserapp.exceptions.MovieAlreadyExistsException;
 import com.stackroute.moviecruiserapp.exceptions.MovieNotFoundException;
 import com.stackroute.moviecruiserapp.repository.MovieRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService{
 
     MovieRepository movieRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     public MovieServiceImpl(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -43,6 +46,7 @@ public class MovieServiceImpl implements MovieService{
 //        }
         Movie savedMovie= movieRepository.getMovieByTitle(title);
         if(savedMovie == null){
+            LOGGER.warn("Movie not found exception - {}", title);
             throw new MovieNotFoundException(title);
         }
         return savedMovie;
@@ -80,6 +84,7 @@ public class MovieServiceImpl implements MovieService{
 //        }
         Movie savedMovie=movieRepository.save(movie);
         if(savedMovie == null){
+            LOGGER.warn("Movie already exists exception ");
             throw new MovieAlreadyExistsException(movie);
         }
         return savedMovie;
