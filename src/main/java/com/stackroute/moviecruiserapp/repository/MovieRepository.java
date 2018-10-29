@@ -13,6 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends MongoRepository<Movie,Integer> {
-    @Query("{ 'title' : ?0 }")
-    public Movie getMovieByTitle(@Param("title") String title);
+    @Query("{ 'original_title' : ?0 }")
+    public Movie getMovieByTitle(@Param("original_title") String title);
 }

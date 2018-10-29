@@ -40,9 +40,9 @@ public class MovieServiceTest {
         MockitoAnnotations.initMocks(this);
         movie = new Movie();
         movie.setId(120);
-        movie.setTitle("Rang De Basanti");
+        movie.setOriginal_title("Rang De Basanti");
         movie.setComments("good movie");
-        movie.setLanguage("Hindi");
+        movie.setOriginal_language("Hindi");
         list = new ArrayList<>();
         list.add(movie);
     }

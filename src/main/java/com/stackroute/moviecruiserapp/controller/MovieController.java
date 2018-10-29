@@ -30,6 +30,8 @@ public class MovieController {
     }
     @Value("${movie-service.controller.exceptionmsg1}")
     private String exceptionMessage;
+    @Value("${movie-service.controller.exceptionmsg2}")
+    private String exceptionMessageExists;
     @PostMapping(value="/movie")
     public ResponseEntity<?> saveMovie(@RequestBody @Valid Movie movie){
         ResponseEntity responseEntity;
@@ -38,7 +40,7 @@ public class MovieController {
             responseEntity = new ResponseEntity<Movie>(savedMovie, HttpStatus.CREATED);
         }
         catch (MovieAlreadyExistsException ex){
-            responseEntity = new ResponseEntity<String>("Movie already exists",HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<String>(exceptionMessageExists,HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
